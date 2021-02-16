@@ -15,9 +15,7 @@ struct ContentView: View {
     ["4","5","6","X"],
     ["1","2","3","X"],
     ["0",".",".","X"]
-    ]
-        
-    
+    ] 
     var body: some View {
         
         ZStack(alignment: .bottom){
@@ -40,23 +38,15 @@ struct ContentView: View {
                     Text(button).font(.system(size:32)).frame(width:80,height:80)
                         .foregroundColor(.white)
                         .background(Color.yellow)
-                        .cornerRadius(40)
-                    
+                        .cornerRadius(40) 
                 }
                 
             }
             
             }
-        }
-    
-        
+            }     
         }.padding(.bottom)
-        
-    }
-    
-}
-
-
+        }}
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
