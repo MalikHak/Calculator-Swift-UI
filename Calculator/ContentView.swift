@@ -1,19 +1,19 @@
 //
 //  ContentView.swift
-//  Calculator
+//  Calc1
 //
-//  Created by Faisal Hakim on 2/10/21.
+//  Created by Faisal Hakim on 2/16/21.
 //
 
 import SwiftUI
-
 
 struct ContentView: View {
     
     let buttonArray = [
         ["7","8","9","X"],
         ["4","5","6","-"],
-        ["1","2","3","+"]
+        ["1","2","3","+"],
+        ["0",".","0","/"]
 
     ]
     var body: some View {
@@ -57,6 +57,5 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-
 
 
