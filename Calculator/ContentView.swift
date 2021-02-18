@@ -46,8 +46,6 @@ enum CalculatorButton:String{
             return "X"
         case .divide:
             return "/"
-        case .ac:
-            return "AC"
         case .plusminus:
             return "+/_"
         case .percent:
@@ -60,7 +58,7 @@ enum CalculatorButton:String{
     var backGroundColor:Color{
         
         switch self {
-        case .zero,.one,.two,.three,.four,.five,.six,.seven:
+        case .zero,.one,.two,.three,.four,.five,.six,.seven,.eight,.nine:
             return Color(.gray)
         
         case .ac,.plusminus,.percent:
@@ -76,6 +74,7 @@ struct ContentView: View {
     
     let buttons:[[CalculatorButton]] = [
         [.ac,.plusminus,.percent,.divide],
+        [.seven,.eight,.nine,.multiply],
         [.four,.five,.six,.minus],
         [.one,.two,.three,.plus]
      
@@ -100,10 +99,16 @@ struct ContentView: View {
             HStack{
                 ForEach(row, id: \.self){button in
    
-                    Text(button.title).font(.system(size:32)).frame(width:80,height:80)
-                        .foregroundColor(.white)
-                        .background(button.backGroundColor)
-                        .cornerRadius(40)
+                    
+                    Button(action:{
+                        
+                    }){
+                        Text(button.title).font(.system(size:32)).frame(width:80,height:80)
+                                                .foregroundColor(.white)
+                                                .background(button.backGroundColor)
+                                                .cornerRadius(40)
+                    }
+                    
                     
                 }
                 
