@@ -102,7 +102,7 @@ struct ContentView: View {
             }.padding()
             
             ForEach(buttons, id:\.self){row in
-            HStack{
+                HStack(spacing: 12){
                 ForEach(row, id: \.self){button in
    
                     
@@ -146,4 +146,6 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+
 
