@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+//An enum is a special "class" that represents a group of constants (unchangeable variables, like final variables).
+
 enum CalculatorButton:String{
     case zero,one,two,three,four,five,six,seven,eight,nine
     case equals,plus,minus,multiply,divide
+    case decimal
     
     case ac,plusminus,percent
     
@@ -36,8 +39,6 @@ enum CalculatorButton:String{
             return "8"
         case .nine:
             return "9"
-        case .equals:
-            return "10"
         case .plus:
             return "11"
         case .minus:
@@ -50,6 +51,12 @@ enum CalculatorButton:String{
             return "+/_"
         case .percent:
             return "/"
+        case .equals:
+        return "="
+            
+        case .decimal:
+        return "."
+            
         default:
             return "AC"
         }
@@ -76,7 +83,8 @@ struct ContentView: View {
         [.ac,.plusminus,.percent,.divide],
         [.seven,.eight,.nine,.multiply],
         [.four,.five,.six,.minus],
-        [.one,.two,.three,.plus]
+        [.one,.two,.three,.plus],
+        [.zero,.decimal,.equals]
      
     ]
         
@@ -96,17 +104,17 @@ struct ContentView: View {
             }.padding()
             
             ForEach(buttons, id:\.self){row in
-            HStack{
+                HStack(spacing: 12){
                 ForEach(row, id: \.self){button in
    
                     
                     Button(action:{
                         
                     }){
-                        Text(button.title).font(.system(size:32)).frame(width:80,height:80)
+                        Text(button.title).font(.system(size:32)).frame(width:self.buttonWidth(button: button),height: (UIScreen.main.bounds.width - 5 * 12)/4)
                                                 .foregroundColor(.white)
                                                 .background(button.backGroundColor)
-                                                .cornerRadius(40)
+                            .cornerRadius(self.buttonWidth(button: button))
                     }
                     
                     
@@ -120,6 +128,16 @@ struct ContentView: View {
         
         }
         
+    }
+    
+    func buttonWidth(button:CalculatorButton)->CGFloat{
+        
+        if button == .zero {
+            return (UIScreen.main.bounds.width - 4 * 12)/4 * 2
+
+        }
+        
+        return (UIScreen.main.bounds.width - 5 * 12)/4
     }
     
 }
