@@ -1,26 +1,40 @@
 //
 //  ContentView.swift
-//  Calculator
+//  Calc1
 //
-//  Created by Faisal Hakim on 2/10/21.
+//  Created by Faisal Hakim on 2/16/21.
 //
 
 import SwiftUI
-//An enum is a special "class" that represents a group of constants (unchangeable variables, like final variables).
 
-enum CalculatorButton:String{
-    case zero,one,two,three,four,five,six,seven,eight,nine
-    case equals,plus,minus,multiply,divide
-    case decimal
+enum CalculatorButton: String{
     
+    case zero, one, two, three, four,five,six,seven,eight,nine
+    case eqquals, plus,minus,multiply,divide
     case ac,plusminus,percent
+    case decimalpoint
+
+    var backgroundColor:Color{
+        switch self{
+        case .zero,.one,.two,.three,.four,.five,.six,.seven,.eight,.nine,.decimalpoint:
+        return Color(.darkGray)
+             
+    
+        case .ac,.plusminus,.percent:
+        return Color(.lightGray)
+        
+        default:
+            return .orange
+        }
+    }
+    
     
     
     var title:String{
         switch self{
-        
+ 
         case .zero:
-            return "0"
+           return "0"
         case .one:
             return "1"
         case .two:
@@ -39,113 +53,123 @@ enum CalculatorButton:String{
             return "8"
         case .nine:
             return "9"
+        case .decimalpoint:
+        return "."
+        case .eqquals:
+            return  "="
         case .plus:
-            return "11"
+            return "+"
         case .minus:
             return "-"
         case .multiply:
             return "X"
         case .divide:
             return "/"
+       
         case .plusminus:
-            return "+/_"
+           return "+/-"
         case .percent:
-            return "/"
-        case .equals:
-        return "="
-            
-        case .decimal:
-        return "."
-            
-        default:
+         return   "%"
+        
+         default:
             return "AC"
+        
         }
+    
     }
     
-    var backGroundColor:Color{
+}
+
+
+//Creating Environment Object
+class GlobalEnvironment: ObservableObject{
+    
+    @Published var display = "00"
+    
+    
+    func recieveInput(calculatorButton:CalculatorButton){
         
-        switch self {
-        case .zero,.one,.two,.three,.four,.five,.six,.seven,.eight,.nine:
-            return Color(.gray)
+        self.display = calculatorButton.title
         
-        case .ac,.plusminus,.percent:
-        return Color(.lightGray)
+
         
-        default:
-            return .orange
-        }
     }
+    
+    
 }
 
 struct ContentView: View {
     
-    let buttons:[[CalculatorButton]] = [
+    @EnvironmentObject var env:GlobalEnvironment
+    
+    let buttonArray: [[CalculatorButton]] = [
         [.ac,.plusminus,.percent,.divide],
         [.seven,.eight,.nine,.multiply],
         [.four,.five,.six,.minus],
         [.one,.two,.three,.plus],
-        [.zero,.decimal,.equals]
-     
+        [.zero,.decimalpoint,.eqquals]
+
     ]
-        
-    
     var body: some View {
-        
-        ZStack(alignment: .bottom){
-            Color.black
-            Color.black.edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-            VStack(spacing:16){
-            
-            HStack{
-            Spacer()
-                Text("32").foregroundColor(.white)
-                    .font(.system(size:64))
+       
+        ZStack(alignment:.bottom){
+                        Color.black
+            Color.black.edgesIgnoringSafeArea(.all)
+           
+            VStack{
                 
+                
+                //Calculator Result Area
+            HStack{
+             Spacer()
+                Text(env.display).foregroundColor(.white).font(.system(size:70))
             }.padding()
+     
             
-            ForEach(buttons, id:\.self){row in
+            //Calculator Buttons Area
+                
+            ForEach(buttonArray,id:\.self){ row in
+                
                 HStack(spacing: 12){
-                ForEach(row, id: \.self){button in
-   
+            ForEach(row,id: \.self){button in
+               
+                Button(action:{
+                 
+                    self.env.recieveInput(calculatorButton: button)
                     
-                    Button(action:{
-                        
-                    }){
-                        Text(button.title).font(.system(size:32)).frame(width:self.buttonWidth(button: button),height: (UIScreen.main.bounds.width - 5 * 12)/4)
-                                                .foregroundColor(.white)
-                                                .background(button.backGroundColor)
-                            .cornerRadius(self.buttonWidth(button: button))
-                    }
-                    
-                    
+                }){
+                    Text(button.title).font(.system(size:32)).frame(width:self.buttonwidth(button: button),height: (UIScreen.main.bounds.width - 5 * 12)/4).foregroundColor(.white).background(button.backgroundColor).cornerRadius(self.buttonwidth(button: button))
+                                        .padding(4)
                 }
                 
-            }
+                
+                    
             
             }
         }
-    
-        
+                
+            }
+        }.padding(.bottom)
+            
         }
-        
     }
-    
-    func buttonWidth(button:CalculatorButton)->CGFloat{
+
+    func buttonwidth(button:CalculatorButton) ->CGFloat{
         
         if button == .zero {
-            return (UIScreen.main.bounds.width - 4 * 12)/4 * 2
-
+            return (UIScreen.main.bounds.width - 4 * 12)/4*2
         }
         
         return (UIScreen.main.bounds.width - 5 * 12)/4
+        
+        
     }
     
-}
 
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
-    }
+        ContentView().environmentObject(GlobalEnvironment())    }
 }
 
