@@ -91,7 +91,13 @@ class GlobalEnvironment: ObservableObject{
         
         self.display = calculatorButton.title
         
-
+//Add code for sepcifing the number and operations
+        
+//Add Code for calculation methods
+        
+        
+        
+        
         
     }
     
