@@ -96,6 +96,9 @@ class GlobalEnvironment: ObservableObject{
 //Add Code for calculation methods
         
         
+        // A simple trick for Calculation has been added to test file
+        
+        
         
         
         
