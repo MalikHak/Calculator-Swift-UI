@@ -2,7 +2,7 @@
 
 
 
-//
+// Calculate Button Formula
 
 
 @IBOutlet weak var resultLabel: UILabel!
